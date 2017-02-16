@@ -17,11 +17,12 @@ Contest.prototype.sayContest = function(textMessage) {
   }
 };
 
-Contest.prototype.showContests = function() {
-  axios.get('https://www.freelancer.com/api/contests/0.1/contests/?statuses[]=active&limit=10')
-    .then(function(response) {
+Contest.prototype.getContests = function() {
+  return axios.get('https://www.freelancer.com/api/contests/0.1/contests/?statuses[]=active&limit=10', {
+    transformResponse: [function (response) {
       return response.data.result.contests;
-    });
+    }],
+  });
 }
 
 // export the class

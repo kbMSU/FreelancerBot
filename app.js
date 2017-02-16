@@ -82,13 +82,16 @@ function receivedMessage(event) {
   var contest = new Contest();
 
   if (messageText) {
+    console.log(messageText);
    // If we receive a text message, check to see if it matches a keyword
    // and send back the example. Otherwise, just echo the text we received.
     if (contest.sayContest(messageText)) {
-      contestList = Contest.showContests();
-      for (var i = 0; i < contestList.length; i++) {
-        sendTextMessage(senderID, contestList[i].title);
-      }
+      console.log('contest');
+      contest.getContests()
+        .then(function (response) {
+          var contestList = response;
+          sendTextMessage(senderID, contestList[0].title);
+        }
     } else {
       sendTextMessage(senderID, messageText);
     }
