@@ -89,7 +89,7 @@ function receivedMessage(event) {
       console.log('contest');
       contest.showContests()
         .then(function (response) {
-          sendTextMessage(senderID, response.toString());
+          sendTextMessage(senderID, response.data.result.contests[0].title);
         })
     } else {
       console.log('normal_message');
