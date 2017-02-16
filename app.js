@@ -87,7 +87,10 @@ function receivedMessage(event) {
    // and send back the example. Otherwise, just echo the text we received.
     if (contest.sayContest(messageText)) {
       console.log('contest');
-      sendTextMessage(senderID, contest.showContests());
+      contest.showContests()
+        .then(function (response) {
+          sendTextMessage(senderID, response.toString());
+        })
     } else {
       console.log('normal_message');
       sendTextMessage(senderID, messageText);

@@ -1,4 +1,4 @@
-var request = require('request');
+var axios = require('axios');
 
 // Constructor
 function Contest() {
@@ -18,11 +18,7 @@ Contest.prototype.sayContest = function(textMessage) {
 };
 
 Contest.prototype.showContests = function() {
-  request('https://www.freelancer.com/api/contests/0.1/contests/?statuses[]=active&limit=10', function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      return body;
-    }
-  })
+  return axios.get('https://www.freelancer.com/api/contests/0.1/contests/?statuses[]=active&limit=10');
 }
 
 // export the class
