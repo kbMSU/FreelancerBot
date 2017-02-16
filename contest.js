@@ -18,7 +18,10 @@ Contest.prototype.sayContest = function(textMessage) {
 };
 
 Contest.prototype.showContests = function() {
-  return axios.get('https://www.freelancer.com/api/contests/0.1/contests/?statuses[]=active&limit=10');
+  axios.get('https://www.freelancer.com/api/contests/0.1/contests/?statuses[]=active&limit=10')
+    .then(function(response) {
+      return response.data.result.contests;
+    });
 }
 
 // export the class
