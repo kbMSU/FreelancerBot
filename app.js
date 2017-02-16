@@ -3,7 +3,7 @@ var fs = require('fs');
 var https = require('https');
 var app = express();
 
-var PAGE_ACCESS_TOKEN = 'EAAGHIKQ5uIkBAN161m8b2R3P50CRK4SCRXjJHjPU6LhABEAgHGzz4MgKi1iy3h8AH35i0po6bxWGwdXu9YtXRCcEu2Y6WuobKZBnQXSoyY4CeA9zZAaWzWDQeRZAJ6qUB7AGuOe5ZB5q9T8pd71VZBNpi0UgDiJ0UQlbmUwAL1QZDZD';
+var PAGE_ACCESS_TOKEN = 'EAAGHIKQ5uIkBALhexC4HbiTdozsnXcQbI5JrsiOJ0qaDJyYoZBMiNBpjGZBeMiZBBSB3VZCbTIZCIZAfFw6GRZCSKmIy100jU9hTZBWkStWJSaZA2FT2ZBsxxAtuo9EuKJdZBKyFRQmdf6yTtG2AuUpU78quA5DKLHnldmysafE8pxKkwZDZD';
 var VERIFY_TOKEN = 'freelancer_bot_hackathon';
 
 app.get('/', function (req, res) {
@@ -22,7 +22,7 @@ app.get('/webhook', function(req, res) {
     res.sendStatus(403);
   }
 });
-/*
+
 app.post('/webhook', function (req, res) {
   var data = req.body;
 
@@ -52,7 +52,7 @@ app.post('/webhook', function (req, res) {
     res.sendStatus(200);
   }
 });
-*/
+
 function receivedMessage(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
