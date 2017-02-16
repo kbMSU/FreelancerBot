@@ -3,7 +3,7 @@ var fs = require('fs');
 var https = require('https');
 var app = express();
 
-var PAGE_ACCESS_TOKEN = 'EAAGHIKQ5uIkBAKSzupCbKeRkZBWpSQq07ZAiZA04Ke6GLNBISnsLkO3k3U6BNOoHPpsqtQ6YvtGtuEjJdX6f7DgFJ3wTjAzkjxGivpHFiuOL6vOjhjLHsIV6sVZB1I9i4pS0eWWb03oRJbWQcRZCXyheNmY0Tu1XHLwc1dP35kgZDZD';
+var PAGE_ACCESS_TOKEN = 'EAAGHIKQ5uIkBAN161m8b2R3P50CRK4SCRXjJHjPU6LhABEAgHGzz4MgKi1iy3h8AH35i0po6bxWGwdXu9YtXRCcEu2Y6WuobKZBnQXSoyY4CeA9zZAaWzWDQeRZAJ6qUB7AGuOe5ZB5q9T8pd71VZBNpi0UgDiJ0UQlbmUwAL1QZDZD';
 var VERIFY_TOKEN = 'freelancer_bot_hackathon';
 
 app.get('/', function (req, res) {
