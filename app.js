@@ -7,11 +7,12 @@ var PAGE_ACCESS_TOKEN = 'EAAGHIKQ5uIkBAN161m8b2R3P50CRK4SCRXjJHjPU6LhABEAgHGzz4M
 var VERIFY_TOKEN = 'freelancer_bot_hackathon';
 
 app.get('/', function (req, res) {
-  console.log("Received request");
+  console.log("Received basic hello world request");
   res.send('Hello World!');
 });
 
 app.get('/webhook', function(req, res) {
+  console.log("Received request to subscribe");
   if (req.query['hub.mode'] === 'subscribe' &&
       req.query['hub.verify_token'] === VERIFY_TOKEN) {
     console.log("Validating webhook");
