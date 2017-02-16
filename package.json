@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/kbMSU/FreelancerBot#readme",
   "dependencies": {
+    "client-oauth2": "^3.4.1",
     "express": "^4.14.1"
   }
 }
