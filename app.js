@@ -22,7 +22,7 @@ app.get('/webhook', function(req, res) {
     res.sendStatus(403);
   }
 });
-
+/*
 app.post('/webhook', function (req, res) {
   var data = req.body;
 
@@ -52,7 +52,7 @@ app.post('/webhook', function (req, res) {
     res.sendStatus(200);
   }
 });
-
+*/
 function receivedMessage(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
