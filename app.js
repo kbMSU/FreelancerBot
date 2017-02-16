@@ -9,7 +9,7 @@ var request = require('request');
 
 var app = express();
 app.set('view engine', 'ejs');
-app.use(bodyParser.json({ verify: verifyRequestSignature }));
+app.use(bodyParser.json());
 app.use(express.static('public'));
 
 var PAGE_ACCESS_TOKEN = 'EAAGHIKQ5uIkBALhexC4HbiTdozsnXcQbI5JrsiOJ0qaDJyYoZBMiNBpjGZBeMiZBBSB3VZCbTIZCIZAfFw6GRZCSKmIy100jU9hTZBWkStWJSaZA2FT2ZBsxxAtuo9EuKJdZBKyFRQmdf6yTtG2AuUpU78quA5DKLHnldmysafE8pxKkwZDZD';
