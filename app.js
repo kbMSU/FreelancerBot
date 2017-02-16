@@ -77,18 +77,17 @@ function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
+  var contest = new Contest();
+
   if (messageText) {
 
    // If we receive a text message, check to see if it matches a keyword
    // and send back the example. Otherwise, just echo the text we received.
-   switch (messageText) {
-     case 'generic':
-       sendGenericMessage(senderID);
-       break;
-
-     default:
-       sendTextMessage(senderID, messageText);
-   }
+    if (contest.sayContest(messageText)) {
+      sendTextMessage(senderID, contest.showContests());
+    } else {
+      sendTextMessage(senderID, messageText);
+    }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
   }
