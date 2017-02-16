@@ -3,11 +3,23 @@ var fs = require('fs');
 var https = require('https');
 var app = express();
 
-var PAGE_ACCESS_TOKEN = 'EAAGHIKQ5uIkBAKSzupCbKeRkZBWpSQq07ZAiZA04Ke6GLNBISnsLkO3k3U6BNOoHPpsqtQ6YvtGtuEjJdX6f7DgFJ3wTjAzkjxGivpHFiuOL6vOjhjLHsIV6sVZB1I9i4pS0eWWb03oRJbWQcRZCXyheNmY0Tu1XHLwc1dP35kgZDZD'
+var PAGE_ACCESS_TOKEN = 'EAAGHIKQ5uIkBAKSzupCbKeRkZBWpSQq07ZAiZA04Ke6GLNBISnsLkO3k3U6BNOoHPpsqtQ6YvtGtuEjJdX6f7DgFJ3wTjAzkjxGivpHFiuOL6vOjhjLHsIV6sVZB1I9i4pS0eWWb03oRJbWQcRZCXyheNmY0Tu1XHLwc1dP35kgZDZD';
+var VERIFY_TOKEN = 'freelancer_bot_hackathon';
 
 app.get('/', function (req, res) {
   console.log("Received request");
   res.send('Hello World!');
+});
+
+app.get('/webhook', function(req, res) {
+  if (req.query['hub.mode'] === 'subscribe' &&
+      req.query['hub.verify_token'] === VERIFY_TOKEN) {
+    console.log("Validating webhook");
+    res.status(200).send(req.query['hub.challenge']);
+  } else {
+    console.error("Failed validation. Make sure the validation tokens match.");
+    res.sendStatus(403);
+  }
 });
 
 app.post('/webhook', function (req, res) {
