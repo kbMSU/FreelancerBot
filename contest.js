@@ -20,7 +20,8 @@ Contest.prototype.sayContest = function(textMessage) {
 Contest.prototype.getContests = function() {
   return axios.get('https://www.freelancer.com/api/contests/0.1/contests/?statuses[]=active&limit=10', {
     transformResponse: [function (data) {
-      return data.result.contests;
+      var dataJson = JSON.parse(data);
+      return dataJson.result.contests;
     }],
   });
 }

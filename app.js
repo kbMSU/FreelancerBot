@@ -90,7 +90,9 @@ function receivedMessage(event) {
       contest.getContests()
         .then(function (response) {
           var contestList = response.data;
-          sendTextMessage(senderID, contestList[0].title);
+          for (var i = 0; i < contestList.length; i++) {
+            sendTextMessage(senderID, contestList[i].title);
+          }
         });
     } else {
       sendTextMessage(senderID, messageText);
