@@ -21,8 +21,8 @@ app.get('/webhook', function(req, res) {
 });
 
 https.createServer({
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.crt')
+  key: fs.readFileSync('/etc/letsencrypt/live/freelancerbot.flndev.com/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/freelancerbot.flndev.com/fullchain.pem')
 }, app).listen(80, function () {
   console.log('Example app listening on port 80!');
 });
