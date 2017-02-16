@@ -89,9 +89,9 @@ function receivedMessage(event) {
       console.log('contest');
       contest.getContests()
         .then(function (response) {
-          var contestList = response;
+          var contestList = response.data;
           sendTextMessage(senderID, contestList[0].title);
-        }
+        });
     } else {
       sendTextMessage(senderID, messageText);
     }

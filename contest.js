@@ -19,8 +19,8 @@ Contest.prototype.sayContest = function(textMessage) {
 
 Contest.prototype.getContests = function() {
   return axios.get('https://www.freelancer.com/api/contests/0.1/contests/?statuses[]=active&limit=10', {
-    transformResponse: [function (response) {
-      return response.data.result.contests;
+    transformResponse: [function (data) {
+      return data.result.contests;
     }],
   });
 }
