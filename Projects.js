@@ -63,7 +63,7 @@ Projects.prototype.getResponseForProjectSearch = function(words) {
 Projects.prototype.getAllProjectCategories = function() {
   console.log("Getting All project categories");
 
-  this.getCategoriesPromise().then((response) => this.processResponse(response));
+  this.getCategoriesPromise().then((response) => this.processResponse(JSON.parse(response)));
 };
 
 Projects.prototype.getCategoriesPromise = function() {
@@ -77,7 +77,7 @@ function(response) {
 */
 
 Projects.prototype.processResponse = function(resp) {
-  var json = JSON.parse(resp);
+  var json = resp;//JSON.parse(resp);
   console.log(json);
   var success = json.success;
   if(success){
