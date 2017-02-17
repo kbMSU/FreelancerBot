@@ -61,15 +61,17 @@ Projects.prototype.getResponseForProjectSearch = function(words) {
 Projects.prototype.getAllProjectCategories = function() {
   console.log("Getting All project categories");
 
-  var json = axios.get("https://www.freelancer.com/api/projects/0.1/job_bundle_categories/", {
-    transformResponse: [function(data) {
-      //console.log("The data is : "+data);
-      var dataJson = JSON.parse(data);
-      //console.log("The json data is : "+dataJson);
-      return dataJson;
-    }]
+  this.getCategoriesPromise().then(function(response) {
+    this.this.processResponse(response);
   });
+};
 
+Projects.prototype.getCategoriesPromise = function() {
+  return axios.get("https://www.freelancer.com/api/projects/0.1/job_bundle_categories/");
+};
+
+Projects.prototype.processResponse = function(response) {
+  var json = response;
   var success = json.success;
   if(success){
     console.log("It is a success");
