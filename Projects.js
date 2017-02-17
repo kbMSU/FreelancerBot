@@ -145,84 +145,9 @@ Projects.prototype.getProjectsForQuery = function(filters) {
   this.getProjectsPromise(query).then((response) => this.processProjectsResponse(query,response));
 };
 
-Projects.prototype.getProjectsForCategory = function(category) {
-  console.log("Getting projects for category");
-
-  this.offset = 0;
-  this.category = category;
-
-  this.getProjectsByCategoryPromise(category).then((response) => this.processProjectsByCategoriesResponse(category,response));
-};
-
 Projects.prototype.getProjectsPromise = function(query) {
   console.log("QUERY IS : "+"https://www.freelancer.com/api/projects/0.1/projects/active/?or_search_query="+query+"&limit=4"+"&offset="+this.offset);
   return axios.get("https://www.freelancer.com/api/projects/0.1/projects/active/?or_search_query="+query+"&limit=4"+"&offset="+this.offset);
-};
-
-Projects.prototype.getProjectsByCategoryPromise = function(category) {
-  console.log("QUERY IS : "+"https://www.freelancer.com/api/projects/0.1/projects/active/?project_types[]="+category+"&limit=4"+"&offset="+this.offset);
-  return axios.get("https://www.freelancer.com/api/projects/0.1/projects/active/?project_types[]="+category+"&limit=4"+"&offset="+this.offset);
-};
-
-Projects.prototype.processProjectsByCategoriesResponse = function(category, resp) {
-  var status = json.status;
-  if(status==='success'){
-    console.log("It is a success");
-    var projects = json.result.projects;
-    //console.log(projects);
-    var items = [];
-    //console.log(projects[0]);
-    for(i=0;i<projects.length;i++) {
-      var project = projects[i];
-      items.push({title:project.title,subtitle:project.preview_description,
-      buttons: [
-        {
-          type: "postback",
-          title: "View",
-          payload: "PROJECT."+project.id,
-        }
-      ]});
-    }
-    var newOffset = this.offset+4;
-    items.push({title:"Do you want to view more projects ?",
-      buttons: [
-        {
-          type: "postback",
-          title: "View more",
-          payload: "PROJECT_MORE_CATEGORY."+this.category+"."+newOffset
-        }
-      ]
-    });
-    //console.log(items);
-    var response = {
-      recipient: {
-        id: this.recipientId
-      },
-      message: {
-        attachment: {
-          type: "template",
-          payload: {
-            template_type: "generic",
-            elements: items
-          }
-        }
-      }
-    };
-    console.log("Sending successfull response");
-    //console.log(items);
-    this.sendResponse(response);
-  } else {
-    console.log("It is an error");
-    var error = {
-      recipient: {
-        id: this.recipientId
-      },
-      message: {
-        text: "There was an error getting projects"
-      }
-    };
-    this.sendResponse(error);
-  }
 };
 
 Projects.prototype.processProjectsResponse = function(filter, resp) {
@@ -239,9 +164,9 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
       items.push({title:project.title,subtitle:project.preview_description,
       buttons: [
         {
-          type: "postback",
+          type: "web_url",
           title: "View",
-          payload: "PROJECT."+project.id,
+          url: "https://www.freelancer.com.au/"
         }
       ]});
     }
