@@ -152,7 +152,7 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
     var items = [];
     for(i=0;i<projects.length;i++) {
       var project = projects[i];
-      items.push({title:project.name,subtitle:project.description,
+      items.push({title:project.title,subtitle:project.preview_description,
       buttons: [
         {
           type: "postback",
@@ -161,7 +161,7 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
         }
       ]});
     }
-    console.log(items);
+    //console.log(items);
     var response = {
       recipient: {
         id: this.recipientId
