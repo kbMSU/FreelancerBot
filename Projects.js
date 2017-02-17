@@ -214,11 +214,11 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
 Projects.prototype.isProjectsPostback = function(payload) {
    if(payload.includes("PROJECT") || payload.includes("CATEGORY")) {
      if(payload.includes("PROJECT_MORE_QUERY")) {
-       this.handleViewMoreButtonClick();
+       this.handleViewMoreButtonClick(payload);
      } else if(payload.includes("CATEGORY")) {
-       this.handleViewCategoryButtonClick();
+       this.handleViewCategoryButtonClick(payload);
      } else {
-       this.handleViewProjectButtonClick();
+       this.handleViewProjectButtonClick(payload);
      }
 
      return true;
@@ -227,11 +227,11 @@ Projects.prototype.isProjectsPostback = function(payload) {
    }
 };
 
-Projects.prototype.handleViewProjectButtonClick = function() {
+Projects.prototype.handleViewProjectButtonClick = function(payload) {
   console.log("Clicked on view project");
 };
 
-Projects.prototype.handleViewCategoryButtonClick = function() {
+Projects.prototype.handleViewCategoryButtonClick = function(payload) {
   console.log("Clicked on view category");
 };
 
