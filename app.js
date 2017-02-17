@@ -78,6 +78,7 @@ function receivedMessage(event) {
 
   var messageText = message.text;
   var messageAttachments = message.attachments;
+  var messagePostback = message.postback;
 
   var contest = new Contest();
 
@@ -95,6 +96,8 @@ function receivedMessage(event) {
     } else {
       sendTextMessage(senderID, messageText);
     }
+  } else if (messagePostback) {
+    sendTextMessage(senderID, 'It works fkn damnit');
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
   }
