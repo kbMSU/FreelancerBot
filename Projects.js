@@ -62,7 +62,7 @@ Projects.prototype.getAllProjectCategories = function() {
   console.log("Getting All project categories");
 
   this.getCategoriesPromise().then(function(response) {
-    this.this.processResponse(response);
+    this.processResponse(response);
   });
 };
 
@@ -70,8 +70,8 @@ Projects.prototype.getCategoriesPromise = function() {
   return axios.get("https://www.freelancer.com/api/projects/0.1/job_bundle_categories/");
 };
 
-Projects.prototype.processResponse = function(response) {
-  var json = response;
+Projects.prototype.processResponse = function(resp) {
+  var json = resp;
   var success = json.success;
   if(success){
     console.log("It is a success");
