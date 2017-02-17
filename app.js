@@ -80,7 +80,7 @@ function receivedMessage(event) {
 
   if (messageText) {
     var project = new Project(senderID);
-    if(project.isSearchingForProjects(messageText)) {
+    if(project.isSearchingForProjects(recipientID,messageText)) {
       return;
     }
    // If we receive a text message, check to see if it matches a keyword
