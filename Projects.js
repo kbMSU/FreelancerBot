@@ -11,12 +11,14 @@ var message;
 var response;
 
 function Projects(recipientId) {
+  console.log("Instantiated Projects");
   this.recipientId = recipientId;
   this.message = "";
   this.response = Response();
 }
 
 Projects.prototype.isSearchingForProjects = function(senderId, messageText) {
+  console.log("Is searching for projects");
   this.message = messageText;
 
   var words = messageText.split(" ");
@@ -32,10 +34,12 @@ Projects.prototype.isSearchingForProjects = function(senderId, messageText) {
   if(isSearcingForProject) {
     getResponseForProjectSearch(words);
   }
+  console.log("Returning isSearchingForProjects");
   return isSearcingForProject;
 };
 
 Projects.prototype.getResponseForProjectSearch = function(words) {
+  console.log("Getting response for project search");
   var filters = [];
   for(i=0;i<words.length;i++) {
     word = words[i];
@@ -52,6 +56,7 @@ Projects.prototype.getResponseForProjectSearch = function(words) {
 };
 
 Projects.prototype.getAllProjectCategories = function() {
+  console.log("Getting All project categories");
   axios.get("https://www.freelancer.com/api/projects/0.1/job_bundle_categories/", function(data) {
     var json = JSON.parse(data);
     var success = json.success;
@@ -92,10 +97,11 @@ Projects.prototype.getAllProjectCategories = function() {
 };
 
 Projects.prototype.getProjectsForQuery = function(filters) {
-
+  console.log("Getting projects for query");
 };
 
 Projects.prototype.sendResponse = function(messageData) {
+  console.log("Sending response back");
   response.callSendAPI(messageData);
 };
 
