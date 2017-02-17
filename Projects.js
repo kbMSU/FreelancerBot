@@ -60,47 +60,50 @@ Projects.prototype.getResponseForProjectSearch = function(words) {
 
 Projects.prototype.getAllProjectCategories = function() {
   console.log("Getting All project categories");
-  axios.get("https://www.freelancer.com/api/projects/0.1/job_bundle_categories/", {
+
+  var json = axios.get("https://www.freelancer.com/api/projects/0.1/job_bundle_categories/", {
     transformResponse: [function(data) {
       console.log("The data is : "+data);
-      var json = JSON.parse(data);
-      console.log("The json data is : "+json);
-      var success = json.success;
-      if(success){
-        var categories = json.result.job_bundle_categories;
-        var items = [];
-        for(i=0;i<categories.length;i++) {
-          var category = categories[i];
-          items.push({title:category.name});
-        }
-        var response = {
-          recipient: {
-            id: this.recipientId
-          },
-          message: {
-            attachment: {
-              type: "template",
-              payload: {
-                template_type: "generic",
-                elements: items
-              }
-            }
-          }
-        };
-        this.sendResponse(response);
-      } else {
-        var error = {
-          recipient: {
-            id: this.recipientId
-          },
-          message: {
-            text: "There was an error getting project categories"
-          }
-        };
-        this.sendResponse(error);
-      }
+      var dataJson = JSON.parse(data);
+      console.log("The json data is : "+dataJson);
+      return dataJson;
     }]
   });
+
+  var success = json.success;
+  if(success){
+    var categories = json.result.job_bundle_categories;
+    var items = [];
+    for(i=0;i<categories.length;i++) {
+      var category = categories[i];
+      items.push({title:category.name});
+    }
+    var response = {
+      recipient: {
+        id: this.recipientId
+      },
+      message: {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: items
+          }
+        }
+      }
+    };
+    this.sendResponse(response);
+  } else {
+    var error = {
+      recipient: {
+        id: this.recipientId
+      },
+      message: {
+        text: "There was an error getting project categories"
+      }
+    };
+    this.sendResponse(error);
+  }
 };
 
 Projects.prototype.getProjectsForQuery = function(filters) {
