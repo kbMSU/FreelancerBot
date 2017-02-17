@@ -149,7 +149,7 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
   if(status==='success'){
     console.log("It is a success");
     var projects = json.result.projects;
-    console.log(projects);
+    //console.log(projects);
     var items = [];
     for(i=0;i<projects.length;i++) {
       var project = projects[i];
