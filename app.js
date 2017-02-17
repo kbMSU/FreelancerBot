@@ -89,10 +89,10 @@ function receivedMessage(event) {
    // and send back the example. Otherwise, just echo the text we received.
     if (contest.sayContest(messageText)) {
       console.log('contest');
-      contest.getContests()
+      contest.getContests(0)
         .then(function (response) {
           var contestList = response.data;
-          sendListMessage(senderID, contest.getElementList(contestList));
+          sendListMessage(senderID, contest.getElementList(contestList), 'contest|0');
         });
     } else {
       sendTextMessage(senderID, messageText);
@@ -107,6 +107,8 @@ function receivedPostback(event) {
   var recipientID = event.recipient.id;
   var timeOfPostback = event.timestamp;
 
+  var contest = new Contest();
+
   // The 'payload' param is a developer-defined field which is set in a postback 
   // button for Structured Messages. 
   var payload = event.postback.payload;
@@ -116,7 +118,16 @@ function receivedPostback(event) {
 
   // When a postback is called, we'll send a message back to the sender to 
   // let them know it was successful
-  sendTextMessage(senderID, "Postback called");
+  if (contest.isPayload(payload)) {
+    var listNum = contest.getlistNum(payload);
+    contest.getContests(offset)
+      .then(function (response) {
+        var contestList = response.data;
+        sendListMessage(senderID, contest.getElementList(contestList), 'contest|' + listNum);
+      });
+  } else {
+    sendTextMessage(senderID, "Postback called");
+  }
 }
 
 function sendGenericMessage(recipientId, messageText) {
@@ -136,7 +147,7 @@ function sendTextMessage(recipientId, messageText) {
   callSendAPI(messageData);
 }
 
-function sendListMessage(recipientId, elementList) {
+function sendListMessage(recipientId, elementList, payload) {
   var messageData = {
     recipient: {
       id: recipientId
@@ -152,7 +163,7 @@ function sendListMessage(recipientId, elementList) {
             {
               title: 'View More',
               type: 'postback',
-              payload: 'payload'                        
+              payload: payload                   
             }
           ]  
         }
