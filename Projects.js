@@ -19,6 +19,7 @@ function Projects(recipientId) {
 
 Projects.prototype.isSearchingForProjects = function(senderId, message) {
   console.log("Is searching for projects");
+  console.log("Message is : " + message);
   var messageText = message.trim();
   messageText = messageText.toLowerCase();
   this.message = messageText;
