@@ -1,5 +1,5 @@
 var axios = require('axios');
-var response = require('./Response.js');
+var Response = require('./Response.js');
 
 var typeKeywords = ['job','project','jobs','projects'];
 var filterKeywords = ['website','it','mobile','writing','art','design','data','entry','software','dev',
@@ -17,8 +17,10 @@ function Projects(recipientId) {
   this.response = Response();
 }
 
-Projects.prototype.isSearchingForProjects = function(senderId, messageText) {
+Projects.prototype.isSearchingForProjects = function(senderId, message) {
   console.log("Is searching for projects");
+  var messageText = message.trim();
+  messageText = messageText.toLowerCase();
   this.message = messageText;
 
   var words = messageText.split(" ");
