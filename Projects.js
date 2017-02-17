@@ -63,9 +63,9 @@ Projects.prototype.getAllProjectCategories = function() {
 
   var json = axios.get("https://www.freelancer.com/api/projects/0.1/job_bundle_categories/", {
     transformResponse: [function(data) {
-      console.log("The data is : "+data);
+      //console.log("The data is : "+data);
       var dataJson = JSON.parse(data);
-      console.log("The json data is : "+dataJson);
+      //console.log("The json data is : "+dataJson);
       return dataJson;
     }]
   });
@@ -93,6 +93,7 @@ Projects.prototype.getAllProjectCategories = function() {
         }
       }
     };
+    console.log("Sending successfull response");
     this.sendResponse(response);
   } else {
     console.log("It is an error");
