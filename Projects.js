@@ -63,9 +63,7 @@ Projects.prototype.getResponseForProjectSearch = function(words) {
 Projects.prototype.getAllProjectCategories = function() {
   console.log("Getting All project categories");
 
-  this.getCategoriesPromise().then(function(response) {
-    that.processResponse(response);
-  });
+  this.getCategoriesPromise().then((response) => this.processResponse(response));
 };
 
 Projects.prototype.getCategoriesPromise = function() {
