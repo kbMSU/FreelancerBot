@@ -11,7 +11,7 @@ var message;
 var response;
 var that;
 
-var limit = 10;
+var limit = 3;
 var offset = 0;
 
 function Projects(recipientId) {
@@ -151,6 +151,7 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
     var projects = json.result.projects;
     //console.log(projects);
     var items = [];
+    console.log("Items count : "+projects.length);
     for(i=0;i<projects.length;i++) {
       var project = projects[i];
       items.push({title:project.name,subtitle:project.description,
