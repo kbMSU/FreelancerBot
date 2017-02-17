@@ -145,6 +145,7 @@ Projects.prototype.getProjectsForQuery = function(filters) {
 };
 
 Projects.prototype.getProjectsPromise = function(query) {
+  console.log("QUERY IS : "+"https://www.freelancer.com/api/projects/0.1/projects/active/?or_search_query="+query+"&limit=4"+"&offset="+this.offset);
   return axios.get("https://www.freelancer.com/api/projects/0.1/projects/active/?or_search_query="+query+"&limit=4"+"&offset="+this.offset);
 };
 
@@ -168,12 +169,13 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
         }
       ]});
     }
+    var newOffset = this.offset+4;
     items.push({title:"Do you want to view more projects ?",
       buttons: [
         {
           type: "postback",
           title: "View more",
-          payload: "PROJECT_MORE_QUERY"
+          payload: "PROJECT_MORE_QUERY."+this.query+"."+newOffset
         }
       ]
     });
@@ -211,7 +213,7 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
 
 Projects.prototype.isProjectsPostback = function(payload) {
    if(payload.includes("PROJECT") || payload.includes("CATEGORY")) {
-     if(payload === "PROJECT_MORE_QUERY") {
+     if(payload.includes("PROJECT_MORE_QUERY")) {
        this.handleViewMoreButtonClick();
      } else if(payload.includes("CATEGORY")) {
        this.handleViewCategoryButtonClick();
@@ -236,7 +238,11 @@ Projects.prototype.handleViewCategoryButtonClick = function() {
 Projects.prototype.handleViewMoreButtonClick = function(payload) {
   console.log("Clicked on view more projects");
 
-  this.offset += 4;
+  var words = payload.split(".");
+  this.query = words[1];
+  this.offset = words[2];
+
+  this.getProjectsPromise(this.query).then((response) => this.processProjectsResponse(this.query,response));
 };
 
 Projects.prototype.sendResponse = function(messageData) {
