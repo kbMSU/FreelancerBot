@@ -311,9 +311,10 @@ Projects.prototype.handleViewCategoryButtonClick = function(payload) {
   console.log("Clicked on view category");
 
   var words = payload.split(".");
-  this.category = words[1];
+  this.query = words[1];
+  this.offset = 0;
 
-  this.getProjectsForCategory(this.category);
+  this.getProjectsPromise(this.query).then((response) => this.processProjectsResponse(this.query,response));
 };
 
 Projects.prototype.handleViewMoreButtonClick = function(payload) {
