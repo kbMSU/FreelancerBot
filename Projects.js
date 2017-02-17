@@ -1,5 +1,5 @@
 var axios = require('axios');
-var requre = require('./Response.js');
+var response = require('./Response.js');
 
 var typeKeywords = ['job','project','jobs','projects'];
 var filterKeywords = ['website','it','mobile','writing','art','design','data','entry','software','dev',
