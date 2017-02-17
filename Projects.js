@@ -78,12 +78,12 @@ function(response) {
 
 Projects.prototype.processResponse = function(resp) {
   var json = resp.data;//JSON.parse(resp);
-  console.log(json);
+  //console.log(json);
   var status = json.status;
   if(status==='success'){
     console.log("It is a success");
     var categories = json.result.job_bundle_categories;
-    console.log(categories);
+    //console.log(categories);
     var items = [];
     for(i=0;i<categories.length;i++) {
       var category = categories[i];
@@ -104,6 +104,7 @@ Projects.prototype.processResponse = function(resp) {
       }
     };
     console.log("Sending successfull response");
+    console.log(items);
     this.sendResponse(response);
   } else {
     console.log("It is an error");
