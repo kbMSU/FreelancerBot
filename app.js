@@ -48,6 +48,8 @@ app.post('/webhook', function (req, res) {
       entry.messaging.forEach(function(event) {
         if (event.message) {
           receivedMessage(event);
+        } else if (event.postback) {
+          receivedPostback(event);
         } else {
           console.log("Webhook received unknown event: ", event);
         }
@@ -95,6 +97,20 @@ function receivedMessage(event) {
    }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
+  }
+}
+
+function receivedPostback(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var timeOfPostback = event.timestamp;
+
+  // The 'payload' param is a developer-defined field which is set in a postback
+  // button for Structured Messages.
+  var payload = event.postback.payload;
+
+  if(project.isProjectsPostback(payload)) {
+    return;
   }
 }
 

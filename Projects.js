@@ -206,7 +206,33 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
   }
 };
 
+Projects.prototype.isProjectsPostback = function(payload) {
+   if(payload.includes("PROJECT") || payload.includes("CATEGORY")) {
+     if(payload === "PROJECT_MORE_QUERY") {
+       this.handleViewMoreButtonClick();
+     } else if(payload.includes("CATEGORY")) {
+       this.handleViewCategoryButtonClick();
+     } else {
+       this.handleViewProjectButtonClick();
+     }
+
+     return true;
+   } else {
+     return false;
+   }
+};
+
+Projects.prototype.handleViewProjectButtonClick = function() {
+  console.log("Clicked on view project");
+};
+
+Projects.prototype.handleViewCategoryButtonClick = function() {
+  console.log("Clicked on view category");
+};
+
 Projects.prototype.handleViewMoreButtonClick = function(payload) {
+  console.log("Clicked on view more projects");
+  
   this.offset += 4;
 };
 
