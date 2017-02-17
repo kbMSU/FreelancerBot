@@ -79,8 +79,8 @@ function(response) {
 Projects.prototype.processResponse = function(resp) {
   var json = resp.data;//JSON.parse(resp);
   console.log(json);
-  var success = json.success;
-  if(success){
+  var status = json.status;
+  if(status==='success'){
     console.log("It is a success");
     var categories = json.result.job_bundle_categories;
     console.log(categories);
