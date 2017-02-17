@@ -18,12 +18,34 @@ Contest.prototype.sayContest = function(textMessage) {
 };
 
 Contest.prototype.getContests = function() {
-  return axios.get('https://www.freelancer.com/api/contests/0.1/contests/?statuses[]=active&limit=10', {
+  return axios.get('https://www.freelancer.com/api/contests/0.1/contests/?statuses[]=active&limit=4', {
     transformResponse: [function (data) {
       var dataJson = JSON.parse(data);
       return dataJson.result.contests;
     }],
   });
+}
+
+Contest.prototype.getElementList = function(contestList) {
+  var elementList = [];
+
+  for (var i = 0; i < contestList.length; i++) {
+    var contest = contestList[i];
+    var element = {
+      title: contest.title,
+      subtitle: 'test',
+      default_action: {
+        type: 'web_url',
+        url: 'https://www.freelancer.com/' + contest.seo_url 
+        messenger_extensions: true,
+        webview_height_ratio: 'tall',
+        fallback_url: 'https://www.freelancer.com'
+      }
+    }
+    elementList.push(element);
+  }
+
+  return elementList;
 }
 
 // export the class

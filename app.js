@@ -91,7 +91,7 @@ function receivedMessage(event) {
         .then(function (response) {
           var contestList = response.data;
           for (var i = 0; i < contestList.length; i++) {
-            sendTextMessage(senderID, contestList[i].title);
+            sendListMessage(senderID, contest.getElementList(contestList));
           }
         });
     } else {
@@ -113,6 +113,33 @@ function sendTextMessage(recipientId, messageText) {
     },
     message: {
       text: messageText
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+function sendListMessage(recipientId, elementList) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'list',
+          top_element_style: 'compact',
+          elements: elementList,
+          buttons: [
+            {
+              title: 'View More',
+              type: 'postback',
+              payload: 'payload'                        
+            }
+          ]  
+        }
+      }
     }
   };
 
