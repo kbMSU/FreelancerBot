@@ -17,14 +17,14 @@ function Projects(recipientId) {
   this.response = new Response();
 }
 
-Projects.prototype.isSearchingForProjects = function(senderId, message) {
+Projects.prototype.isSearchingForProjects = function(senderId, messageText) {
   console.log("Is searching for projects");
-  console.log("Message is : " + message);
-  var messageText = message.trim();
-  messageText = messageText.toLowerCase();
   this.message = messageText;
+  console.log("Message is : " + this.message);
+  this.message = this.message.trim();
+  this.message = this.message.toLowerCase();
 
-  var words = messageText.split(" ");
+  var words = this.message.split(" ");
   var isSearcingForProject = false;
   for(i=0;i<words.length;i++){
     word = words[i];
