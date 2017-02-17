@@ -9,12 +9,14 @@ var filterKeywords = ['website','it','mobile','writing','art','design','data','e
 var recipientId;
 var message;
 var response;
+var that;
 
 function Projects(recipientId) {
   console.log("Instantiated Projects");
   this.recipientId = recipientId;
   this.message = "";
   this.response = new Response();
+  this.that = this;
 }
 
 Projects.prototype.isSearchingForProjects = function(senderId, messageText) {
@@ -62,7 +64,7 @@ Projects.prototype.getAllProjectCategories = function() {
   console.log("Getting All project categories");
 
   this.getCategoriesPromise().then(function(response) {
-    this.processResponse(response);
+    that.processResponse(response);
   });
 };
 
