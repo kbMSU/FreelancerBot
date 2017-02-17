@@ -76,6 +76,8 @@ function receivedMessage(event) {
 
   var messageText = message.text;
   var messageAttachments = message.attachments;
+  
+  var users = new Users();
 
   if (messageText) {
 
@@ -86,7 +88,10 @@ function receivedMessage(event) {
        sendGenericMessage(senderID);
        break;
 	 case 'users':
-	   sendUserMessage(senderID, messageText);
+	   var users = getUserList(messageText);
+	   for(var i = 0; i < users.length; i++){
+		   sendTextMessage(senderID, users[i].username);
+	   }
      default:
        sendTextMessage(senderID, messageText);
    }
