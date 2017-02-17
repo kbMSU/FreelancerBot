@@ -12,6 +12,7 @@ var response;
 var that;
 
 var offset = 0;
+var query = "";
 
 function Projects(recipientId) {
   console.log("Instantiated Projects");
@@ -135,6 +136,8 @@ Projects.prototype.getProjectsForQuery = function(filters) {
     }
   }
 
+  this.query = query;
+
   this.getProjectsPromise(query).then((response) => this.processProjectsResponse(query,response));
 };
 
@@ -180,6 +183,7 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
     console.log("Sending successfull response");
     //console.log(items);
     this.sendResponse(response);
+    this.addViewMoreByQueriesButton();
   } else {
     console.log("It is an error");
     var error = {
@@ -192,6 +196,37 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
     };
     this.sendResponse(error);
   }
+};
+
+Projects.prototype.addViewMoreByQueriesButton = function() {
+  var text = "Do you want to find more projects ?";
+  var button = [
+    {
+      type: "postback",
+      title: "View more",
+      payload: "PROJECT_MORE_QUERY"
+    }
+  ];
+  var response = {
+    recipient: {
+      id: this.recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: text,
+          buttons: button
+        }
+      }
+    }
+  };
+  this.sendResponse(response);
+};
+
+Projects.prototype.handleViewMoreButtonClick = function(payload) {
+  this.offset += 4;
 };
 
 Projects.prototype.sendResponse = function(messageData) {
