@@ -89,7 +89,7 @@ Projects.prototype.processCategoriesResponse = function(resp) {
         {
           type: "postback",
           title: "View Projects",
-          payload: category.name,
+          payload: "CATEGORY."+category.name,
         }
       ]});
     }
@@ -108,7 +108,7 @@ Projects.prototype.processCategoriesResponse = function(resp) {
       }
     };
     console.log("Sending successfull response");
-    console.log(items);
+    //console.log(items);
     this.sendResponse(response);
   } else {
     console.log("It is an error");
@@ -140,12 +140,57 @@ Projects.prototype.getProjectsForQuery = function(filters) {
 };
 
 Projects.prototype.getProjectsPromise = function(query) {
-  return axios.get("https://www.freelancer.com/api/projects/0.1/projects/active/?query="+query+"&limit="+this.limit+"&offset="+this.offset);
+  return axios.get("https://www.freelancer.com/api/projects/0.1/projects/active/?or_search_query="+query+"&limit="+this.limit+"&offset="+this.offset);
 };
 
 Projects.prototype.processProjectsResponse = function(filter, resp) {
   var json = resp.data;
-  console.log(json);
+  var status = json.status;
+  if(status==='success'){
+    console.log("It is a success");
+    var projects = json.result.projects;
+    console.log(projects);
+    var items = [];
+    for(i=0;i<projects.length;i++) {
+      var project = projects[i];
+      items.push({title:project.name,subtitle:project.description,
+      buttons: [
+        {
+          type: "postback",
+          title: "View",
+          payload: "PROJECT."+project.id,
+        }
+      ]});
+    }
+    var response = {
+      recipient: {
+        id: this.recipientId
+      },
+      message: {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: items
+          }
+        }
+      }
+    };
+    console.log("Sending successfull response");
+    //console.log(items);
+    this.sendResponse(response);
+  } else {
+    console.log("It is an error");
+    var error = {
+      recipient: {
+        id: this.recipientId
+      },
+      message: {
+        text: "There was an error getting projects"
+      }
+    };
+    this.sendResponse(error);
+  }
 };
 
 Projects.prototype.sendResponse = function(messageData) {
