@@ -73,9 +73,9 @@ function receivedMessage(event) {
   var timeOfMessage = event.timestamp;
   var message = event.message;
 
-  console.log("Received message for user %d and page %d at %d with message:",
-   senderID, recipientID, timeOfMessage);
-  console.log(JSON.stringify(message));
+  //console.log("Received message for user %d and page %d at %d with message:",
+  // senderID, recipientID, timeOfMessage);
+  //console.log(JSON.stringify(message));
 
   var messageId = message.mid;
 
@@ -111,6 +111,8 @@ function receivedPostback(event) {
   // The 'payload' param is a developer-defined field which is set in a postback
   // button for Structured Messages.
   var payload = event.postback.payload;
+
+  project.setRecipient(senderID);
 
   if(project.isProjectsPostback(payload)) {
     return;
