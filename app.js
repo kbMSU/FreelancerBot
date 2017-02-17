@@ -7,7 +7,7 @@ var config = require('config');
 var crypto = require('crypto');
 var request = require('request');
 
-var Contest = require('./contest.js');
+var Users = require('./users.js');
 
 var app = express();
 app.set('view engine', 'ejs');
