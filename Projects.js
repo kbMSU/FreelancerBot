@@ -14,13 +14,16 @@ var that;
 var offset = 0;
 var query = "";
 
-function Projects(recipientId) {
+function Projects() {
   console.log("Instantiated Projects");
-  this.recipientId = recipientId;
   this.message = "";
   this.response = new Response();
   this.that = this;
 }
+
+Projects.prototype.setRecipient = function(recipientId) {
+  this.recipientId = recipientId;
+};
 
 Projects.prototype.isSearchingForProjects = function(senderId, messageText) {
   console.log("Is searching for projects");
@@ -232,7 +235,7 @@ Projects.prototype.handleViewCategoryButtonClick = function() {
 
 Projects.prototype.handleViewMoreButtonClick = function(payload) {
   console.log("Clicked on view more projects");
-  
+
   this.offset += 4;
 };
 

@@ -16,6 +16,8 @@ app.use(express.static('public'));
 var PAGE_ACCESS_TOKEN = 'EAAGHIKQ5uIkBALhexC4HbiTdozsnXcQbI5JrsiOJ0qaDJyYoZBMiNBpjGZBeMiZBBSB3VZCbTIZCIZAfFw6GRZCSKmIy100jU9hTZBWkStWJSaZA2FT2ZBsxxAtuo9EuKJdZBKyFRQmdf6yTtG2AuUpU78quA5DKLHnldmysafE8pxKkwZDZD';
 var VERIFY_TOKEN = 'freelancer_bot_hackathon';
 
+var project = new Project();
+
 app.get('/', function (req, res) {
   console.log("Received basic hello world request");
   res.send('Hello World!');
@@ -80,8 +82,9 @@ function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
+  project.setRecipient(senderID);
+
   if (messageText) {
-    var project = new Project(senderID);
     if(project.isSearchingForProjects(recipientID,messageText)) {
       return;
     }
