@@ -150,6 +150,7 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
     var projects = json.result.projects;
     //console.log(projects);
     var items = [];
+    console.log(projects[0]);
     for(i=0;i<projects.length;i++) {
       var project = projects[i];
       items.push({title:project.title,subtitle:project.preview_description,
