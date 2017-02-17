@@ -35,7 +35,7 @@ Projects.prototype.isSearchingForProjects = function(senderId, messageText) {
   }
 
   if(isSearcingForProject) {
-    getResponseForProjectSearch(words);
+    this.getResponseForProjectSearch(words);
   }
   console.log("Returning isSearchingForProjects");
   return isSearcingForProject;
@@ -52,9 +52,9 @@ Projects.prototype.getResponseForProjectSearch = function(words) {
   }
 
   if(filters.length > 0) {
-    getProjectsForQuery(filters);
+    this.getProjectsForQuery(filters);
   } else {
-    getAllProjectCategories();
+    this.getAllProjectCategories();
   }
 };
 
@@ -84,7 +84,7 @@ Projects.prototype.getAllProjectCategories = function() {
           }
         }
       };
-      sendResponse(response);
+      this.sendResponse(response);
     } else {
       var error = {
         recipient: {
@@ -94,7 +94,7 @@ Projects.prototype.getAllProjectCategories = function() {
           text: "There was an error getting project categories"
         }
       };
-      sendResponse(error);
+      this.sendResponse(error);
     }
   });
 };
