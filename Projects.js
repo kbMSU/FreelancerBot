@@ -11,6 +11,9 @@ var message;
 var response;
 var that;
 
+var limit = 10;
+var offset = 0;
+
 function Projects(recipientId) {
   console.log("Instantiated Projects");
   this.recipientId = recipientId;
@@ -63,20 +66,14 @@ Projects.prototype.getResponseForProjectSearch = function(words) {
 Projects.prototype.getAllProjectCategories = function() {
   console.log("Getting All project categories");
 
-  this.getCategoriesPromise().then((response) => this.processResponse(response));
+  this.getCategoriesPromise().then((response) => this.processCategoriesResponse(response));
 };
 
 Projects.prototype.getCategoriesPromise = function() {
   return axios.get("https://www.freelancer.com/api/projects/0.1/job_bundle_categories/");
 };
 
-/*
-function(response) {
-  that.processResponse(response);
-}
-*/
-
-Projects.prototype.processResponse = function(resp) {
+Projects.prototype.processCategoriesResponse = function(resp) {
   var json = resp.data;//JSON.parse(resp);
   //console.log(json);
   var status = json.status;
@@ -129,6 +126,26 @@ Projects.prototype.processResponse = function(resp) {
 
 Projects.prototype.getProjectsForQuery = function(filters) {
   console.log("Getting projects for query");
+
+  this.offset = 0;
+
+  var query = ""+filters[i];
+  if(filters.length > 1) {
+    for(j=1;j<filters.length;j++) {
+      query += " "+filters[j];
+    }
+  }
+
+  this.getProjectsPromise(query).then((response) => this.processProjectsResponse(query,response));
+};
+
+Projects.prototype.getProjectsPromise = function(query) {
+  return axios.get("https://www.freelancer.com/api/projects/0.1/projects/active/?query="+query+"&limit="+this.limit+"&offset="+this.offset);
+};
+
+Projects.prototype.processProjectsResponse = function(filter, resp) {
+  var json = resp.data;
+  console.log(json);
 };
 
 Projects.prototype.sendResponse = function(messageData) {
