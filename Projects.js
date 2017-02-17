@@ -139,7 +139,7 @@ Projects.prototype.getProjectsForQuery = function(filters) {
 };
 
 Projects.prototype.getProjectsPromise = function(query) {
-  return axios.get("https://www.freelancer.com/api/projects/0.1/projects/active/?or_search_query="+query+"&limit=4"+"&offset="+this.offset);
+  return axios.get("https://www.freelancer.com/api/projects/0.1/projects/active/?query="+query+"&limit=4"+"&offset="+this.offset);
 };
 
 Projects.prototype.processProjectsResponse = function(filter, resp) {
@@ -150,7 +150,7 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
     var projects = json.result.projects;
     //console.log(projects);
     var items = [];
-    console.log(projects[0]);
+    //console.log(projects[0]);
     for(i=0;i<projects.length;i++) {
       var project = projects[i];
       items.push({title:project.title,subtitle:project.preview_description,
