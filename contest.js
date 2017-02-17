@@ -36,7 +36,7 @@ Contest.prototype.getElementList = function(contestList) {
       subtitle: 'test',
       default_action: {
         type: 'web_url',
-        url: 'https://www.freelancer.com/' + contest.seo_url 
+        url: 'https://www.freelancer.com/' + contest.seo_url,
         messenger_extensions: true,
         webview_height_ratio: 'tall',
         fallback_url: 'https://www.freelancer.com'
