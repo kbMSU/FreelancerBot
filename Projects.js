@@ -77,12 +77,13 @@ function(response) {
 */
 
 Projects.prototype.processResponse = function(resp) {
-  var json = resp;//JSON.parse(resp);
-  console.log(json);
+  var json = resp.data;//JSON.parse(resp);
+  //console.log(json);
   var success = json.success;
   if(success){
     console.log("It is a success");
     var categories = json.result.job_bundle_categories;
+    console.log(categories);
     var items = [];
     for(i=0;i<categories.length;i++) {
       var category = categories[i];
