@@ -119,8 +119,8 @@ function receivedPostback(event) {
   // When a postback is called, we'll send a message back to the sender to 
   // let them know it was successful
   if (contest.isPayload(payload)) {
-    var listNum = contest.getlistNum(payload);
-    contest.getContests(offset)
+    var listNum = contest.getListNum(payload);
+    contest.getContests(listNum)
       .then(function (response) {
         var contestList = response.data;
         sendListMessage(senderID, contest.getElementList(contestList), 'contest|' + listNum);
