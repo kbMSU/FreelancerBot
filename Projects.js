@@ -165,6 +165,15 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
         }
       ]});
     }
+    items.push({title:"Do you want to view more projects ?",
+      buttons: [
+        {
+          type: "postback",
+          title: "View more",
+          payload: "PROJECT_MORE_QUERY"
+        }
+      ]
+    });
     //console.log(items);
     var response = {
       recipient: {
@@ -183,7 +192,6 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
     console.log("Sending successfull response");
     //console.log(items);
     this.sendResponse(response);
-    this.addViewMoreByQueriesButton();
   } else {
     console.log("It is an error");
     var error = {
@@ -196,33 +204,6 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
     };
     this.sendResponse(error);
   }
-};
-
-Projects.prototype.addViewMoreByQueriesButton = function() {
-  var text = "Do you want to find more projects ?";
-  var button = [
-    {
-      type: "postback",
-      title: "View more",
-      payload: "PROJECT_MORE_QUERY"
-    }
-  ];
-  var response = {
-    recipient: {
-      id: this.recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "button",
-          text: text,
-          buttons: button
-        }
-      }
-    }
-  };
-  this.sendResponse(response);
 };
 
 Projects.prototype.handleViewMoreButtonClick = function(payload) {
