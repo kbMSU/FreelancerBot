@@ -87,7 +87,14 @@ Projects.prototype.processResponse = function(resp) {
     var items = [];
     for(i=0;i<categories.length;i++) {
       var category = categories[i];
-      items.push({title:category.name});
+      items.push({title:category.name,
+      buttons: [
+        {
+          type: "postback",
+          title: "View Projects",
+          payload: category.name,
+        }
+      ]});
     }
     var response = {
       recipient: {
