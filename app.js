@@ -1,6 +1,7 @@
 var express = require('express');
 var fs = require('fs');
 var https = require('https');
+var Project = require('./Projects.js');
 
 var bodyParser = require('body-parser');
 var config = require('config');
@@ -16,6 +17,8 @@ app.use(express.static('public'));
 
 var PAGE_ACCESS_TOKEN = 'EAAGHIKQ5uIkBALhexC4HbiTdozsnXcQbI5JrsiOJ0qaDJyYoZBMiNBpjGZBeMiZBBSB3VZCbTIZCIZAfFw6GRZCSKmIy100jU9hTZBWkStWJSaZA2FT2ZBsxxAtuo9EuKJdZBKyFRQmdf6yTtG2AuUpU78quA5DKLHnldmysafE8pxKkwZDZD';
 var VERIFY_TOKEN = 'freelancer_bot_hackathon';
+
+var project = new Project();
 
 app.get('/', function (req, res) {
   console.log("Received basic hello world request");
@@ -50,9 +53,9 @@ app.post('/webhook', function (req, res) {
         if (event.message) {
           receivedMessage(event);
         } else if (event.postback) {
-          receivedPostback(event); 
+          receivedPostback(event);
         } else {
-          console.log("Webhook received unknown event: ", event);
+          //console.log("Webhook received unknown event: ", event);
         }
       });
     });
@@ -72,9 +75,9 @@ function receivedMessage(event) {
   var timeOfMessage = event.timestamp;
   var message = event.message;
 
-  console.log("Received message for user %d and page %d at %d with message:",
-   senderID, recipientID, timeOfMessage);
-  console.log(JSON.stringify(message));
+  //console.log("Received message for user %d and page %d at %d with message:",
+  // senderID, recipientID, timeOfMessage);
+  //console.log(JSON.stringify(message));
 
   var messageId = message.mid;
 
@@ -82,9 +85,13 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   var contest = new Contest();
+  project.setRecipient(senderID);
 
   if (messageText) {
-    console.log(messageText);
+    if(project.isSearchingForProjects(recipientID,messageText)) {
+      return;
+    }
+
    // If we receive a text message, check to see if it matches a keyword
    // and send back the example. Otherwise, just echo the text we received.
     if (contest.sayContest(messageText)) {
@@ -109,14 +116,20 @@ function receivedPostback(event) {
 
   var contest = new Contest();
 
-  // The 'payload' param is a developer-defined field which is set in a postback 
-  // button for Structured Messages. 
+  // The 'payload' param is a developer-defined field which is set in a postback
+  // button for Structured Messages.
   var payload = event.postback.payload;
 
-  console.log("Received postback for user %d and page %d with payload '%s' " + 
+  console.log("Received postback for user %d and page %d with payload '%s' " +
     "at %d", senderID, recipientID, payload, timeOfPostback);
 
-  // When a postback is called, we'll send a message back to the sender to 
+    project.setRecipient(senderID);
+
+    if(project.isProjectsPostback(payload)) {
+      return;
+    }
+
+  // When a postback is called, we'll send a message back to the sender to
   // let them know it was successful
   if (contest.isPayload(payload)) {
     var listNum = contest.getListNum(payload);
@@ -163,9 +176,9 @@ function sendListMessage(recipientId, elementList, payload) {
             {
               title: 'View More',
               type: 'postback',
-              payload: payload                   
+              payload: payload
             }
-          ]  
+          ]
         }
       }
     }
@@ -190,7 +203,7 @@ function callSendAPI(messageData) {
         messageId, recipientId);
     } else {
       console.error("Unable to send message.");
-      console.error(response);
+      //console.error(response);
       console.error(error);
     }
   });
