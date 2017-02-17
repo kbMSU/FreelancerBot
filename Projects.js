@@ -70,8 +70,15 @@ Projects.prototype.getCategoriesPromise = function() {
   return axios.get("https://www.freelancer.com/api/projects/0.1/job_bundle_categories/");
 };
 
+/*
+function(response) {
+  that.processResponse(response);
+}
+*/
+
 Projects.prototype.processResponse = function(resp) {
-  var json = resp;
+  var json = JSON.parse(resp);
+  console.log(json);
   var success = json.success;
   if(success){
     console.log("It is a success");
