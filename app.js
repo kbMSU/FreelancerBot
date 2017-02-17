@@ -7,6 +7,8 @@ var config = require('config');
 var crypto = require('crypto');
 var request = require('request');
 
+var Contest = require('./contest.js');
+
 var app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
@@ -77,18 +79,22 @@ function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
-  if (messageText) {
+  var contest = new Contest();
 
+  if (messageText) {
+    console.log(messageText);
    // If we receive a text message, check to see if it matches a keyword
    // and send back the example. Otherwise, just echo the text we received.
-   switch (messageText) {
-     case 'generic':
-       sendGenericMessage(senderID);
-       break;
-
-     default:
-       sendTextMessage(senderID, messageText);
-   }
+    if (contest.sayContest(messageText)) {
+      console.log('contest');
+      contest.getContests()
+        .then(function (response) {
+          var contestList = response.data;
+          sendListMessage(senderID, contest.getElementList(contestList));
+        });
+    } else {
+      sendTextMessage(senderID, messageText);
+    }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
   }
@@ -105,6 +111,33 @@ function sendTextMessage(recipientId, messageText) {
     },
     message: {
       text: messageText
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+function sendListMessage(recipientId, elementList) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'list',
+          top_element_style: 'compact',
+          elements: elementList,
+          buttons: [
+            {
+              title: 'View More',
+              type: 'postback',
+              payload: 'payload'                        
+            }
+          ]  
+        }
+      }
     }
   };
 
