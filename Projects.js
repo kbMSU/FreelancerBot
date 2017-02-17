@@ -11,7 +11,6 @@ var message;
 var response;
 var that;
 
-var limit = 3;
 var offset = 0;
 
 function Projects(recipientId) {
@@ -152,7 +151,7 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
     //console.log(projects);
     var items = [];
     console.log("Items count : "+projects.length);
-    /*for(i=0;i<projects.length;i++) {
+    for(i=0;i<projects.length;i++) {
       var project = projects[i];
       items.push({title:project.name,subtitle:project.description,
       buttons: [
@@ -179,7 +178,7 @@ Projects.prototype.processProjectsResponse = function(filter, resp) {
     };
     console.log("Sending successfull response");
     //console.log(items);
-    this.sendResponse(response);*/
+    this.sendResponse(response);
   } else {
     console.log("It is an error");
     var error = {
