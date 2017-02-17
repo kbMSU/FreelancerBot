@@ -132,12 +132,12 @@ Projects.prototype.getProjectsForQuery = function(filters) {
 
   this.offset = 0;
 
-  var query = ""+filters[i];
-  if(filters.length > 1) {
-    for(j=1;j<filters.length;j++) {
-      query += " "+filters[j];
-    }
+  var query = "";
+  for(i=0;i<filters.length;i++) {
+    query = query.concat(filters[i]);
+    query = query.concat(" ");
   }
+  query = query.trim();
 
   this.query = query;
 

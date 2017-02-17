@@ -53,7 +53,7 @@ app.post('/webhook', function (req, res) {
         } else if (event.postback) {
           receivedPostback(event);
         } else {
-          console.log("Webhook received unknown event: ", event);
+          //console.log("Webhook received unknown event: ", event);
         }
       });
     });
@@ -150,7 +150,7 @@ function callSendAPI(messageData) {
         messageId, recipientId);
     } else {
       console.error("Unable to send message.");
-      console.error(response);
+      //console.error(response);
       console.error(error);
     }
   });
