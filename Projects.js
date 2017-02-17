@@ -72,6 +72,7 @@ Projects.prototype.getAllProjectCategories = function() {
 
   var success = json.success;
   if(success){
+    console.log("It is a success");
     var categories = json.result.job_bundle_categories;
     var items = [];
     for(i=0;i<categories.length;i++) {
@@ -94,6 +95,7 @@ Projects.prototype.getAllProjectCategories = function() {
     };
     this.sendResponse(response);
   } else {
+    console.log("It is an error");
     var error = {
       recipient: {
         id: this.recipientId
@@ -112,7 +114,7 @@ Projects.prototype.getProjectsForQuery = function(filters) {
 
 Projects.prototype.sendResponse = function(messageData) {
   console.log("Sending response back");
-  response.callSendAPI(messageData);
+  this.response.callSendAPI(messageData);
 };
 
 module.exports = Projects;
