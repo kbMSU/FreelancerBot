@@ -78,7 +78,10 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   if (messageText) {
-
+    var project = Project(senderID);
+    if(project.isSearchingForProjects(messageText)) {
+      return;
+    }
    // If we receive a text message, check to see if it matches a keyword
    // and send back the example. Otherwise, just echo the text we received.
    switch (messageText) {
