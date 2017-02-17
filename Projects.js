@@ -28,7 +28,7 @@ Projects.prototype.isSearchingForProjects = function(senderId, messageText) {
   var isSearcingForProject = false;
   for(i=0;i<words.length;i++){
     word = words[i];
-    if(typeKeywords.contains(word)) {
+    if(typeKeywords.includes(word)) {
       isSearcingForProject = true;
       break;
     }
@@ -46,7 +46,7 @@ Projects.prototype.getResponseForProjectSearch = function(words) {
   var filters = [];
   for(i=0;i<words.length;i++) {
     word = words[i];
-    if(filterKeywords.contains(word)) {
+    if(filterKeywords.includes(word)) {
       filters.push(word);
     }
   }
