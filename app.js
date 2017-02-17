@@ -79,7 +79,7 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   if (messageText) {
-    var project = Project(senderID);
+    var project = new Project(senderID);
     if(project.isSearchingForProjects(messageText)) {
       return;
     }

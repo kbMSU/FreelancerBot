@@ -14,7 +14,7 @@ function Projects(recipientId) {
   console.log("Instantiated Projects");
   this.recipientId = recipientId;
   this.message = "";
-  this.response = Response();
+  this.response = new Response();
 }
 
 Projects.prototype.isSearchingForProjects = function(senderId, message) {
